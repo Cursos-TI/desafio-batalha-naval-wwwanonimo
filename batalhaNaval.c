@@ -1,87 +1,119 @@
 #include <stdio.h>
 
+#define LINHA 10
+#define COLUNA 10
+
 int main(){
 
     //Criando um tabuleiro 10x10 
-    int * tabuleiro[10][10];
+    int tabuleiro[LINHA][COLUNA];
     int tamanho = 3;
-
     //Prenchendo o Tabuleiro com o numero 0 em todas as posições
     
-    for (int i = 0; i < 10; i++)//i = percorre a linhas de 0 até 9
+    for (int i = 0; i < LINHA; i++)//i = percorre a linhas de 0 até 9
     {
-        for (int j = 0; j < 10; j++)//j = percorre a coluna de 0 até 9
+        for (int j = 0; j < COLUNA; j++)//j = percorre a coluna de 0 até 9
             {
                 //Colocomos 0 em cada posição do tabuleiro
                 tabuleiro[i][j] = 0;
             }
     }
 
-    //Navio Vertical - Linhas e Colunas Vertical
+    //-----Navio Vertical-----
     int linhaVertical = 5, colunaVertical = 7;
 
 
     for (int i = 0; i < tamanho; i++)
     {
         //a linha vai mudar, a coluna não muda
-        // tabuleiro[5][7] = 3
-        // tabuleiro[6][7] = 3
-        // tabuleiro[7][7] = 3
         tabuleiro[linhaVertical + i][colunaVertical] = 3;
     }
 
-    //Navio Horizontal - Linhas e Colunas Horizontal
+    //-----Navio Horizontal-----
     int linhaHorizontal = 2, colunaHorizontal = 4;
 
     for (int i = 0; i < tamanho; i++)
     {   
         //a coluna vai mudar dessa vez, e a linha não muda
-        // tabuleiro[2][4] = 3
-        // tabuleiro[2][5] = 3
-        // tabuleiro[2][6] = 3
         tabuleiro[linhaHorizontal][colunaHorizontal + i] = 3;
     }
 
-    //Navio Diagonal - Linhas e Colunas
-
+    //-----Navio Diagonal-----
     int linhaDiagonal = 4, colunaDiagonal = 2;
 
     for (int i = 0; i < tamanho; i++)
     {
         //a Linha Diagonal e Coluna Diagonal vão mudando
-        //Tabuleiro [4][2] = 3
-        //Tabuleiro [5][3] = 3
-        //Tabuleiro [6][4] = 3
+
         tabuleiro[linhaDiagonal + i][colunaDiagonal + i] = 3;
     }
 
-    //Navio Diagonal 2 - Linhas e Colunas
-
+    //-----Navio Diagonal2----- 
     int linhaDiagonal_2 = 7, colunaDiagonal_2 = 1;
 
-    //a Linha Diagonal e Coluna Diagonal vão mudando
-    //Tabuleiro [7][1] = 3
-    //Tabuleiro [8][2] = 3
-    //Tabuleiro [9][3] = 3
     for (int i = 0; i < tamanho; i++)
     {
+        //a Linha Diagonal e Coluna Diagonal vão mudando
         tabuleiro[linhaDiagonal_2 + i][colunaDiagonal_2 + i] = 3;
     }
 
-    //Imprimindo o Tabuleiro
+    //-----Habilidades-----
 
-    //Mostrando a Letras do Tabuleiro
+    //Cone
+    int cone_linhas[3] = {9, 8, 7};
+    int cone_colunas[3] = {5, 6, 7};
+    int cone_tamanhos[3] = {5, 3, 1};
+
+    for(int i = 0; i < 3; i++)
+    {
+        for(int j = 0; j < cone_tamanhos[i]; j++)
+        {
+        tabuleiro[cone_linhas[i]][cone_colunas[i] + j] = 5;
+        }
+    }
+
+    //Cruz
+    int cruz_linha[2] = {0, 5};
+    int cruz_coluna[2] = {4, 0};
+    int tamanho_cruz[2] = {10, 10};
+
+    for (int i = 0; i < 2; i++)
+    {   
+        for (int j = 0; j < tamanho_cruz[i]; j++)
+        {
+            if (i == 0)
+            {
+                tabuleiro[cruz_linha[i] + j] [cruz_coluna[i]] = 5; //Vertical
+            } else{
+                tabuleiro[cruz_linha[i]] [cruz_coluna[i] + j] = 5; //Horizontal
+            }
+            
+        }
+      
+    }
+    //Octaedro
+    int octaedro_linha [3] = {2, 1, 3};
+    int octaedro_coluna [3] = {7, 8, 8};
+    int tamanho_octaedro [3] = {3, 1, 1};
+
+    for (int i = 0; i < 3; i++)
+    {   
+        for (int j = 0; j < tamanho_octaedro[i]; j++)
+        {
+             tabuleiro[octaedro_linha[i]][octaedro_coluna[i] + j] = 5;
+        }
+    }
+    //-----IMPRIMINDO CÓDIGO-----
+
     printf ("   A B C D E F G H I J\n\n");
 
-    //Agora mostramos linha por linha
     //i - linha do tabuleiro de 0 a 9
-    for (int i = 0, k = 0; i < 10 && k < 11; i++, k++)
+    for (int i = 0, k = 0; i < LINHA && k < 11; i++, k++)
     {
         //k - numero mostrado ao lado da linha
         printf("%d  ", k);
 
-        //Pecorre todas as colunas dessa linha 
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j < COLUNA; j++)
         {   
             //Mostra o que tem dentro do tabuleiro naquela posição
             //Se for 0 - vazio
@@ -89,9 +121,10 @@ int main(){
             printf("%d ", tabuleiro[i][j]);
         }
 
-        //Pula para proxima linha na tela
         printf("\n");
     }
+
+    
 
     return 0;
 }
